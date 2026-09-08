@@ -85,22 +85,3 @@ new objects without source mutation, literal-text rendering, replacement of old
 results, the output fields, progress and success
 messages, button state during and after requests, HTTP 404/500 errors, network and JSON parsing failures, and recovery on
 retry. Browser rendering and the live API are covered by the manual checks above.
-
-## Part 2.2 — SQL
-
-[solutions.sql](solutions.sql) contains the three read-only queries, with notes
-and assumptions alongside each answer:
-
-1. Campaigns starting in August 2026 with budgets greater than 5,000, ordered by budget.
-2. August CPC per campaign and device, handling zero and missing activity.
-3. Campaign performance per advertiser, retaining advertisers without campaigns
-   and campaigns without metrics.
-
-Run each query against the tables described in the assignment. The SQL does not
-create or modify tables. The queries were checked in PostgreSQL using fictional
-sample data; the expected results were confirmed for all three questions.
-
-For Question 2, the query relies on the stated guarantee of at least one August
-row per relevant campaign/device combination. For Question 3, supplied advertiser
-IDs are assumed to exist in Advertisers, and all campaigns and metric dates are
-included because no reporting period or active-campaign filter is specified.
