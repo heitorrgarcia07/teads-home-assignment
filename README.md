@@ -5,7 +5,15 @@ Technical Solutions Engineer home assignment.
 - [Part 2.1 — Ad Creative Review](index.html)
 - [Part 2.2 — SQL queries and assumptions](solutions.sql)
 
-## Part 2.1 — Ad Creative Review
+## Optional: modular version
+
+The main branch contains the simple implementation for the assignment.
+
+An [improved version](https://github.com/heitorrgarcia07/teads-home-assignment/tree/improved)
+is also available, with JavaScript split into modules, results displayed on
+the page, and additional rendering tests. Its README includes setup instructions.
+
+## Part 2.1 — Ad Creative Review - simple version
 
 A simple HTML and JavaScript page that simulates reviewing ad creatives from
 https://jsonplaceholder.typicode.com/posts. No packages or build step are needed.
