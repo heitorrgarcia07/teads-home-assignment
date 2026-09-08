@@ -1,6 +1,18 @@
-# Teads Home Assignment — Part 2
+# Teads Home Assignment — Part 2 (modular version)
 
 Technical Solutions Engineer home assignment.
+
+This `improved` branch separates API access, review rules, rendering and page
+coordination. The `main` branch keeps the original single-file implementation.
+Results appear on the page as well as in the console. Previous results are cleared
+when a new request starts, including if that request subsequently fails.
+
+### JavaScript modules
+
+- `src/api.js`: fetch creatives and check HTTP responses.
+- `src/reviewAds.js`: pure transformation into reviewed objects.
+- `src/renderCreatives.js`: display results using textContent.
+- `src/main.js`: coordinate the button, messages and request lifecycle.
 
 - [Part 2.1 — Ad Creative Review](index.html)
 - [Part 2.2 — SQL queries and assumptions](solutions.sql)
@@ -21,15 +33,23 @@ The button is disabled while a request is running and re-enabled after success
 or failure. The page displays progress, success, or failure. `response.ok` checks HTTP errors;
 `try/catch` also handles network and response-processing errors.
 
-## Open the page
+## Run the page
 
-Open `index.html` in your browser, open Developer Tools → Console, and click
-**Review Ads**. Internet access is required to fetch the creatives from the API.
+Because this version uses browser ES modules, serve the project over HTTP rather
+than opening index.html directly. With Python 3 installed, run from this folder:
+
+```sh
+python3 -m http.server 8001 --bind 127.0.0.1
+```
+
+Open http://127.0.0.1:8001, open Developer Tools → Console, and click **Review Ads**.
+Any static HTTP server can be used. Internet access is required for the API.
+Stop the server with Ctrl+C.
 
 ## Test
 
 On success, the console should show an array of 100 objects and the page should say
-“Ads reviewed successfully. Check the browser console.”
+“Ads reviewed successfully. Results are shown below and in the browser console.”
 
 | ID | Expected status | Expected title |
 | --- | --- | --- |
@@ -53,15 +73,16 @@ button. Expect the failure message. Restore online mode afterward.
 With Node.js 18 or newer installed, run from the project folder:
 
 ```sh
-node --test tests/review-ads.test.cjs
+node --test tests/*.test.js
 ```
 
-The tests use Node's built-in test runner, with no additional packages. They run
-the JavaScript from `index.html` with a simulated DOM and API responses, so they
+The tests use Node's built-in test runner, with no additional packages. They import
+the JavaScript modules with a simulated DOM and API responses, so they
 work offline and do not require the local HTTP server.
 
 Coverage includes status precedence (IDs 1, 2, 3 and 6), uppercase rejected titles,
-new objects without source mutation, the output fields, progress and success
+new objects without source mutation, literal-text rendering, replacement of old
+results, the output fields, progress and success
 messages, button state during and after requests, HTTP 404/500 errors, network and JSON parsing failures, and recovery on
 retry. Browser rendering and the live API are covered by the manual checks above.
 
